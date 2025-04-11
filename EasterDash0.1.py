@@ -862,7 +862,12 @@ def local_counter():
 
         label_map = {True: "Local", False: "Visitor"}
         labels, counts = zip(*result)
-        labels_mapped = [label_map.get(l, "Unknown") for l in labels]
+        labels_mapped = [
+        "Local" if l in [True, 't', 'True', 'true'] else
+        "Visitor" if l in [False, 'f', 'False', 'false'] else
+        "Unknown"
+        for l in labels
+]
 
         df_chart = pd.DataFrame({"Visitor": labels_mapped, "Count": counts})
 
