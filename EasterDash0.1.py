@@ -601,12 +601,13 @@ def checkLocal(state_):
     State("faith-decicion", "value"),
     State("how-they-found-us", "value"),
     State("country-dropdown", "value"),
-    State("state-dropdown", "value"),
     prevent_initial_call=True,
 )
 def form_submission(
-    n_clicks, inpu, age_val, christian, faith, howtheyfoundus, country_, state_
+    n_clicks, inpu, age_val, christian, faith, howtheyfoundus, country_
 ):
+    state_ = ctx.states.get("state-dropdown.value", "")
+
     print(
         "Form callback triggered!",
         n_clicks,
@@ -837,7 +838,7 @@ def generate_us_map():
         return html.Div("Failed to load state map.")
 
 
-def local_counter_sql():
+def local_counter():
     try:
         with engine.connect() as conn:
             result = conn.execute(text("""
