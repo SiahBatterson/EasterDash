@@ -1077,6 +1077,7 @@ def download_data(n_clicks):
         print("CSV download failed:", e)
         raise PreventUpdate
 
+import datetime
 
 @app.server.after_request
 def apply_cookie_flags(response):
@@ -1085,10 +1086,11 @@ def apply_cookie_flags(response):
         response.set_cookie(
             "submitted",
             "true",
-            max_age=60 * 60 * 24,
+            expires=datetime.utcnow() + timedelta(days=365*10),  # 10 years
             path="/",
             samesite="Lax",
-            secure=True,  # Adjust secure=True if using HTTPS
+            secure=True,
+            httponly=True
         )
     if getattr(request, "_clear_cookie", False):
         print(">> Clearing cookie")
