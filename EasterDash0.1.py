@@ -366,13 +366,26 @@ def pre_submit():
                         "How did you find out about us?:",
                         style={"fontWeight": "bold"},
                     ),
-                    dcc.Input(
-                        id="how-they-found-us",
-                        type="text",
-                        placeholder="(Optionally) Type here...",
-                        value="",
-                        className="form-input",
-                    ),
+                    dcc.Dropdown(
+                    id="how-they-found-us",
+                    options=[
+                        {"label": "Social Media (Instagram, Facebook, etc.)", "value": "social_media"},
+                        {"label": "Friend or Family Recommendation", "value": "word_of_mouth"},
+                        {"label": "Church Announcement", "value": "church_announcement"},
+                        {"label": "Flyer or Poster", "value": "flyer"},
+                        {"label": "Google Search", "value": "google"},
+                        {"label": "Email Newsletter", "value": "email"},
+                        {"label": "Visited NCC Before", "value": "past_visit"},
+                        {"label": "Invited by a Volunteer or Leader", "value": "volunteer_invite"},
+                        {"label": "Event Booth or Outreach", "value": "event_booth"},
+                        {"label": "YouTube or Online Video", "value": "youtube"},
+                        {"label": "Other (please specify)", "value": "other"},
+                    ],
+                    placeholder="How did you find us?",
+                    className="form-input",
+                    value="",
+                    clearable=True,)
+
                 ],
                 style={"marginBottom": "2rem"},
             ),
