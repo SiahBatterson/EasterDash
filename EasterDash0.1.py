@@ -498,7 +498,7 @@ def post_submit():
                 dcc.Loading(
                     id="loading-chart",
                     type="circle",
-                    children=html.Div(id="chart-output",style={'marginTop':'40px'}),
+                    children=html.Div(get_chart_layout("local"), id="chart-output", style={'marginTop':'40px'}),
                 )
             ),
             html.Div(id="admin-panel-wrapper-container"),
