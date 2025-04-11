@@ -1086,7 +1086,7 @@ def apply_cookie_flags(response):
         response.set_cookie(
             "submitted",
             "true",
-            expires=datetime.datetime.utcnow() + datetime.timedelta(days=365*10)
+            expires=datetime.datetime.utcnow() + datetime.timedelta(days=365*10),
             path="/",
             samesite="Lax",
             secure=True,
