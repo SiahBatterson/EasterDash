@@ -27,7 +27,7 @@ from functools import wraps
 from flask import redirect, session, url_for, request
 from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 engine = create_engine(DATABASE_URL)
