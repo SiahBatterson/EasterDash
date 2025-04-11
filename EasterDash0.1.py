@@ -756,18 +756,18 @@ def get_chart_layout(chart_type):
         return html.Div(
             [
                 generate_pie_chart_from_column(
-                    "Age Range", "Age Distribution"
+                    "age_range", "Age Distribution"
                 ),
                 generate_bar_chart_from_column("Age", "Ages in attendance"),
             ]
         )
     elif chart_type == "christians":
         return generate_pie_chart_from_column(
-            "Christ Follower", "Christ Follower Count"
+            "christ_follower", "Christ Follower Count"
         )
     elif chart_type == "faithdecicion":
         return generate_pie_chart_from_column(
-            "Faith Decicion", "Faith Decision Count"
+            "faith_decicion", "Faith Decision Count"
         )
     elif chart_type == "data":
         try:
