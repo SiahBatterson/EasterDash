@@ -97,6 +97,8 @@ columns = [
     "Christ Follower",
     "Faith Decicion",
     "How you found us?",
+    "attends_ncc",
+    "email",
 ]
 
 df = pd.DataFrame()
@@ -273,6 +275,12 @@ def pre_submit():
                         value="",
                         className="form-input",
                     ),
+                    dcc.Checklist(
+                    id='ncc-attend-checkbox',
+                    options=[{'label': 'Do you attend NCC', 'value': 'yes'}],
+                    value=[],
+                    labelStyle={'display': 'inline-block', 'margin-right': '10px'}
+                )
                 ],
                 style={"marginBottom": "1rem"},
             ),
@@ -360,6 +368,22 @@ def pre_submit():
                     ),
                     dcc.Input(
                         id="how-they-found-us",
+                        type="text",
+                        placeholder="(Optionally) Type here...",
+                        value="",
+                        className="form-input",
+                    ),
+                ],
+                style={"marginBottom": "2rem"},
+            ),
+            html.Div(
+                [
+                    html.Label(
+                        "(Optionally) Is there an email we can reach you at?:",
+                        style={"fontWeight": "bold"},
+                    ),
+                    dcc.Input(
+                        id="email-input",
                         type="text",
                         placeholder="(Optionally) Type here...",
                         value="",
@@ -612,12 +636,17 @@ def checkLocal(state_):
     State("how-they-found-us", "value"),
     State("country-dropdown", "value"),
     State("state-dropdown", "value"),  # 👈 ADD THIS
+    State("ncc-attend-checkbox","value"),
+    State("email-input","value"),
     prevent_initial_call=True,
 )
 def form_submission(
-    n_clicks, inpu, age_val, christian, faith, howtheyfoundus, country_, state_
+    n_clicks, inpu, age_val, christian, faith, howtheyfoundus, country_, state_, NCC_goer, email,
 ):
     #state_ = ctx.states.get("state-dropdown.value", "")#
+    attends_ncc = False
+    if NCC_goer == "yes":
+        attends_ncc = True
 
     print(
         "Form callback triggered!",
@@ -665,6 +694,8 @@ def form_submission(
                     christian,
                     faith,
                     howtheyfoundus,
+                    attends_ncc,
+                    email
                 ]
             ],
             columns=columns,
@@ -769,7 +800,7 @@ def get_chart_layout(chart_type):
                 generate_pie_chart_from_column(
                     "age_range", "Age Distribution"
                 ),
-                generate_bar_chart_from_column("Age", "Ages in attendance"),
+                generate_bar_chart_from_column("age", "Ages in attendance"),
             ]
         )
     elif chart_type == "christians":
