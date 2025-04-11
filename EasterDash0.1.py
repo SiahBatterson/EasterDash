@@ -21,6 +21,7 @@ import pandas as pd
 import os
 from flask import request, make_response
 
+
 # auth_setup.py (optional) or top of app.py
 import os
 from functools import wraps
@@ -28,6 +29,7 @@ from flask import redirect, session, url_for, request
 from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, text
+from datetime import timedelta  # Add this at the top of the file
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 engine = create_engine(DATABASE_URL)
@@ -116,6 +118,14 @@ app.title = "Pydash Dashboard"
 prevent_initial_call = "initial_duplicate"
 app.prevent_initial_callbacks = False
 app.config.suppress_callback_exceptions = True
+app.config["SESSION_PERMANENT"] = True
+app.config.update(
+    SESSION_COOKIE_SECURE=True,
+    SESSION_COOKIE_HTTPONLY=True,
+    SESSION_COOKIE_SAMESITE="Lax",
+    PERMANENT_SESSION_LIFETIME=timedelta(hours=1),
+)
+
 
 
 app.layout = lambda: render_layout_with_cookie()
@@ -1078,11 +1088,18 @@ def apply_cookie_flags(response):
             max_age=60 * 60 * 24,
             path="/",
             samesite="Lax",
-            secure=False,  # Adjust secure=True if using HTTPS
+            secure=True,  # Adjust secure=True if using HTTPS
         )
     if getattr(request, "_clear_cookie", False):
         print(">> Clearing cookie")
-        response.set_cookie("submitted", "", max_age=0, path="/")
+        response.set_cookie(
+            "submitted",
+            "",
+            max_age=0,
+            path="/",
+            samesite="Lax",
+            secure=request.url.startswith("https")
+        )
     return response
 
 
