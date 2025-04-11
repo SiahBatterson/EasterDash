@@ -13,7 +13,7 @@ from dash import (
     callback_context,
     ALL,
 )
-
+import traceback
 from dash.exceptions import PreventUpdate
 from dash import ClientsideFunction
 import plotly.express as px
@@ -686,11 +686,19 @@ def form_submission(
                 })
         except Exception as e:
             print("Database insert error:", e)
+            traceback.print_exc()  # ✅ show the full stack trace
+            print("Data trying to insert:", {
+                "name": inpu,
+                "age_range": age_category,
+                "age": age_val,
+                "local": local_value,
+                "country": country_,
+                "state": state_,
+                "christ_follower": christian,
+                "faith_decicion": faith,
+                "how_found": howtheyfoundus,
+            })
             return no_update, False, "Error saving your submission.", False
-
-
-        # Set loading to true after successful submission
-        return "local", "true", "", True
 
     return no_update, False, "", False
 
