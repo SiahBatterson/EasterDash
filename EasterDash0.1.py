@@ -118,12 +118,12 @@ app.title = "Pydash Dashboard"
 prevent_initial_call = "initial_duplicate"
 app.prevent_initial_callbacks = False
 app.config.suppress_callback_exceptions = True
-app.config["SESSION_PERMANENT"] = True
-app.config.update(
+server.config.update(
     SESSION_COOKIE_SECURE=True,
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SAMESITE="Lax",
     PERMANENT_SESSION_LIFETIME=timedelta(hours=1),
+    SESSION_PERMANENT=True,
 )
 
 
