@@ -601,12 +601,13 @@ def checkLocal(state_):
     State("faith-decicion", "value"),
     State("how-they-found-us", "value"),
     State("country-dropdown", "value"),
+    State("state-dropdown", "value"),  # 👈 ADD THIS
     prevent_initial_call=True,
 )
 def form_submission(
-    n_clicks, inpu, age_val, christian, faith, howtheyfoundus, country_
+    n_clicks, inpu, age_val, christian, faith, howtheyfoundus, country_, state_
 ):
-    state_ = ctx.states.get("state-dropdown.value", "")
+    #state_ = ctx.states.get("state-dropdown.value", "")
 
     print(
         "Form callback triggered!",
