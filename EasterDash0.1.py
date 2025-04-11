@@ -617,7 +617,7 @@ def form_submission(
         faith,
         howtheyfoundus,
     )
-    local_value = checkLocal(state_)
+    local_value = bool(checkLocal(state_))
 
     if n_clicks > 0:
         request._set_cookie = True
@@ -664,8 +664,8 @@ def form_submission(
             with engine.begin() as conn:
                 query = text("""
                     INSERT INTO responses (
-                        "Name", "Age Range", "Age", "Local", "Country", "State",
-                        "Christ Follower", "Faith Decicion", "How you found us?"
+                        name, age_range, age, local, country, state,
+                        christ_follower, faith_decicion, how_found
                     )
                     VALUES (
                         :name, :age_range, :age, :local, :country, :state,
@@ -674,15 +674,15 @@ def form_submission(
                 """)
 
                 conn.execute(query, {
-                    "name": inpu,
-                    "age_range": age_category,
+                    "name": inpu.strip(),
+                    "age_range": age_category.strip(),
                     "age": age_val,
-                    "local": local_value,
-                    "country": country_,
-                    "state": state_,
-                    "christ_follower": christian,
-                    "faith_decicion": faith,
-                    "how_found": howtheyfoundus,
+                    "local": bool(local_value),
+                    "country": (country_ or "").strip().title(),
+                    "state": (state_ or "").strip().title(),
+                    "christ_follower": (christian or "").strip().capitalize(),
+                    "faith_decicion": (faith or "").strip().capitalize(),
+                    "how_found": (howtheyfoundus or "").strip(),
                 })
                 print("✅ Submission successful — triggering post_submit layout.")
                 return "local", "true", "", True
