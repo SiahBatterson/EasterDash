@@ -661,7 +661,7 @@ def form_submission(
 
         global df
         try:
-            with engine.connect() as conn:
+            with engine.begin() as conn:
                 query = text("""
                     INSERT INTO responses (
                         "Name", "Age Range", "Age", "Local", "Country", "State",
