@@ -684,6 +684,8 @@ def form_submission(
                     "faith_decicion": faith,
                     "how_found": howtheyfoundus,
                 })
+                print("✅ Submission successful — triggering post_submit layout.")
+                return "local", "true", "", True
         except Exception as e:
             print("Database insert error:", e)
             traceback.print_exc()  # ✅ show the full stack trace
