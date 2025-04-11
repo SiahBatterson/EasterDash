@@ -664,8 +664,8 @@ def form_submission(
             with engine.connect() as conn:
                 query = text("""
                     INSERT INTO responses (
-                        name, age_range, age, local, country, state,
-                        christ_follower, faith_decicion, how_found
+                        "Name", "Age Range", "Age", "Local", "Country", "State",
+                        "Christ Follower", "Faith Decicion", "How you found us?"
                     )
                     VALUES (
                         :name, :age_range, :age, :local, :country, :state,
