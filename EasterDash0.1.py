@@ -722,26 +722,31 @@ def form_submission(
                 query = text("""
                     INSERT INTO responses (
                         name, age_range, age, local, country, state,
-                        christ_follower, faith_decicion, how_found, is_family
+                        christ_follower, faith_decicion, how_found, is_family,
+                        attends_ncc, email
                     )
                     VALUES (
                         :name, :age_range, :age, :local, :country, :state,
-                        :christ_follower, :faith_decicion, :how_found, :is_family
+                        :christ_follower, :faith_decicion, :how_found, :is_family,
+                        :attends_ncc, :email
                     )
                 """)
 
                 conn.execute(query, {
-                    "name": inpu.strip(),
-                    "age_range": age_category.strip(),
-                    "age": age_val,
-                    "local": bool(local_value),
-                    "country": (country_ or "").strip().title(),
-                    "state": (state_ or "").strip().title(),
-                    "christ_follower": (christian or "").strip().capitalize(),
-                    "faith_decicion": (faith or "").strip().capitalize(),
-                    "how_found": (howtheyfoundus or "").strip(),
-                    "is_family": bool(family_tracking),
-                })
+                "name": inpu.strip(),
+                "age_range": age_category.strip(),
+                "age": age_val,
+                "local": bool(local_value),
+                "country": (country_ or "").strip().title(),
+                "state": (state_ or "").strip().title(),
+                "christ_follower": (christian or "").strip().capitalize(),
+                "faith_decicion": (faith or "").strip().capitalize(),
+                "how_found": (howtheyfoundus or "").strip(),
+                "is_family": bool(family_tracking),
+                "attends_ncc": bool(attends_ncc),
+                "email": (email or "").strip(),
+            })
+
                 print("✅ Submission successful — triggering post_submit layout.")
                 return "local", "true", "", True
         except Exception as e:
