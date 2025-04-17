@@ -666,8 +666,11 @@ def form_submission(
 ):
     #state_ = ctx.states.get("state-dropdown.value", "")#
     attends_ncc = False
+    family_tracking = False
     if NCC_goer == "yes":
         attends_ncc = True
+    if family_ == "yes":
+        family_tracking = True
     local_value = bool(checkLocal(state_))
 
     if n_clicks > 0:
@@ -737,7 +740,7 @@ def form_submission(
                     "christ_follower": (christian or "").strip().capitalize(),
                     "faith_decicion": (faith or "").strip().capitalize(),
                     "how_found": (howtheyfoundus or "").strip(),
-                    "is_family": bool(family_),
+                    "is_family": bool(family_tracking),
                 })
                 print("✅ Submission successful — triggering post_submit layout.")
                 return "local", "true", "", True
