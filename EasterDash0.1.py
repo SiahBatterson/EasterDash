@@ -723,7 +723,7 @@ def form_submission(
                     )
                     VALUES (
                         :name, :age_range, :age, :local, :country, :state,
-                        :christ_follower, :faith_decicion, :how_found, :family
+                        :christ_follower, :faith_decicion, :how_found, :is_family
                     )
                 """)
 
