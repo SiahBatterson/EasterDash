@@ -277,7 +277,13 @@ def pre_submit():
                     ),
                     dcc.Checklist(
                     id='ncc-attend-checkbox',
-                    options=[{'label': 'Do you attend NCC', 'value': 'yes'}],
+                    options=[{'label': 'Do you attend NCC', 'value': 'no'}],
+                    value=[],
+                    labelStyle={'display': 'inline-block', 'margin-right': '10px'}
+                ),
+                dcc.Checklist(
+                    id='family_checkbox',
+                    options=[{'label': 'Are you attending with family?', 'value': 'no'}],
                     value=[],
                     labelStyle={'display': 'inline-block', 'margin-right': '10px'}
                 )
