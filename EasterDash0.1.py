@@ -99,6 +99,7 @@ columns = [
     "How you found us?",
     "attends_ncc",
     "email",
+    "family",
 ]
 
 df = pd.DataFrame()
@@ -282,8 +283,8 @@ def pre_submit():
                     labelStyle={'display': 'inline-block', 'margin-right': '10px'}
                 ),
                 dcc.Checklist(
-                    id='family_checkbox',
-                    options=[{'label': 'Are you attending with family?', 'value': 'no'}],
+                    id='family-checkbox',
+                    options=[{'label': 'Are you attending with family?', 'value': 'yes'}],
                     value=[],
                     labelStyle={'display': 'inline-block', 'margin-right': '10px'}
                 )
@@ -657,25 +658,16 @@ def checkLocal(state_):
     State("state-dropdown", "value"),  # 👈 ADD THIS
     State("ncc-attend-checkbox","value"),
     State("email-input","value"),
+    State('family-checkbox','value'),
     prevent_initial_call=True,
 )
 def form_submission(
-    n_clicks, inpu, age_val, christian, faith, howtheyfoundus, country_, state_, NCC_goer, email,
+    n_clicks, inpu, age_val, christian, faith, howtheyfoundus, country_, state_, NCC_goer, email, family_
 ):
     #state_ = ctx.states.get("state-dropdown.value", "")#
     attends_ncc = False
     if NCC_goer == "yes":
         attends_ncc = True
-
-    print(
-        "Form callback triggered!",
-        n_clicks,
-        inpu,
-        age_val,
-        christian,
-        faith,
-        howtheyfoundus,
-    )
     local_value = bool(checkLocal(state_))
 
     if n_clicks > 0:
@@ -714,7 +706,8 @@ def form_submission(
                     faith,
                     howtheyfoundus,
                     attends_ncc,
-                    email
+                    email,
+                    family_
                 ]
             ],
             columns=columns,
@@ -726,11 +719,11 @@ def form_submission(
                 query = text("""
                     INSERT INTO responses (
                         name, age_range, age, local, country, state,
-                        christ_follower, faith_decicion, how_found
+                        christ_follower, faith_decicion, how_found, is_family
                     )
                     VALUES (
                         :name, :age_range, :age, :local, :country, :state,
-                        :christ_follower, :faith_decicion, :how_found
+                        :christ_follower, :faith_decicion, :how_found, :family
                     )
                 """)
 
@@ -744,6 +737,7 @@ def form_submission(
                     "christ_follower": (christian or "").strip().capitalize(),
                     "faith_decicion": (faith or "").strip().capitalize(),
                     "how_found": (howtheyfoundus or "").strip(),
+                    "is_family": bool(family_),
                 })
                 print("✅ Submission successful — triggering post_submit layout.")
                 return "local", "true", "", True
