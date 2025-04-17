@@ -667,10 +667,8 @@ def form_submission(
     #state_ = ctx.states.get("state-dropdown.value", "")#
     attends_ncc = False
     family_tracking = False
-    if NCC_goer == "yes":
-        attends_ncc = True
-    if family_ == "yes":
-        family_tracking = True
+    attends_ncc = "yes" in NCC_goer
+    family_tracking = "yes" in family_
     local_value = bool(checkLocal(state_))
 
     if n_clicks > 0:
